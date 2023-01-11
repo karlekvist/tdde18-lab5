@@ -24,9 +24,9 @@ int main(int argc, char* argv[]){
         text.push_back(word);
     }
 
+    auto test = [](const char& c){std::cout <<" "<<c << std::endl;};
+
 //step 4
-    std::for_each(arguments.cbegin(), arguments.cend(), [](char* &c){
-        std::cout << c << std::endl;
-    });
+    std::for_each(arguments.cbegin(), arguments.cend(), test);
 
 }

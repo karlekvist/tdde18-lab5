@@ -13,7 +13,7 @@ int main(int argc, char* argv[]){
     //keep this as forward list if we dont need to go backwards.
     std::forward_list<char*> arguments;
     //this should copy the arguments in order. double check.
-    std::copy(argv[2], argv[sizeof(argv)-1], arguments);
+    std::copy(argv[2], argv[argc-1], arguments);
 
 //step 3
     //check char* vs string.

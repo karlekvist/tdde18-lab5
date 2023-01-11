@@ -47,7 +47,7 @@ void handleArgument(std::string arg)
         {"--frequency", 2},
         {"--substitute", 3},
         {"--remove", 4}
-        };
+    };
 
     size_t index{0};
     std::string flag;
@@ -91,8 +91,6 @@ void handleArgument(std::string arg)
         //todo: set up an exception here. atm not doing anything.
         return;
     }
-
-
 }
 
 void print()

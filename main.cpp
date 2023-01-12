@@ -86,7 +86,7 @@ void handleArgument(std::string arg, std::list<std::string> &text)
                 break;
         
             case 3:
-                substitute(flag, text);
+                substitute(parameter, text);
                 break;
 
             case 4:

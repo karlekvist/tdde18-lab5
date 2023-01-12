@@ -16,6 +16,7 @@ std::map<std::string, int> get_frequency_map(std::list<std::string> &text);
 int reverse_compare_value(std::pair<std::string, int> left,  std::pair<std::string, int> right);
 int compare_word_length_v(std::pair<std::string, int> left, std::pair<std::string, int> right);
 int get_max_length(std::vector<std::pair<std::string, int>>);
+int get_max_length(std::map<std::string, int> in_m);
 
 
 int main(int argc, char* argv[]){
@@ -107,7 +108,7 @@ void print(std::list<std::string> &text){
 void table(std::list<std::string> &text){
     std::map<std::string, int> frequency_m = get_frequency_map(text);
 
-    int max_length=get_max_length(frequency_m);
+    int max_length = get_max_length(frequency_m);
 
     std::for_each(frequency_m.begin(), frequency_m.end(), [&max_length](std::pair<std::string, int> p){
         std::cout << std::setw(max_length) << std::left << p.first << " " << p.second << std::endl;
@@ -123,7 +124,6 @@ void frequency(std::list<std::string> &text){
 
     std::for_each(frequency_v.begin(), frequency_v.end(),[&frequency_v, &max_length](std::pair<std::string, int> p){
         std::cout << std::setw(max_length) << p.first << " " << p.second << std::endl;
-
     });
 }
 
@@ -148,16 +148,19 @@ int reverse_compare_value(std::pair<std::string, int> left,  std::pair<std::stri
 int compare_word_length_v(std::pair<std::string, int> left, std::pair<std::string, int> right){
     return left.first.length() <  right.first.length();
 }
+
 int get_max_length(std::map<std::string, int> in_m){ 
     std::map<std::string, int>::iterator it = std::max_element(
         in_m.begin(), in_m.end(), compare_word_length_v);
     return it->first.length();
 }
+
 int get_max_length(std::vector<std::pair<std::string, int>> in_v){ 
     std::vector<std::pair<std::string, int>>::iterator it = std::max_element(
         in_v.begin(), in_v.end(), compare_word_length_v);
     return it->first.length();
 }
+
 std::map<std::string, int> get_frequency_map(std::list<std::string> &text){   
     std::map<std::string, int> frequency_map;
     std::for_each(text.begin(), text.end(), 

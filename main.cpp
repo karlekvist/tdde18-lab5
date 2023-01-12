@@ -4,14 +4,16 @@
 #include <list>
 #include <map>
 #include <vector>
-#include<algorithm>
+#include <algorithm>
 
 void handleArgument(std::string arg, std::list<std::string> &text);
+
 void print(std::list<std::string> &text);
 void table(std::list<std::string> &text);
 void frequency(std::list<std::string> &text);
 void substitute(std::string flag, std::list<std::string> &text);
 void remove(std::string word, std::list<std::string> &text);
+
 std::map<std::string, int> get_frequency_map(std::list<std::string> &text);
 int reverse_compare_value(std::pair<std::string, int> left,  std::pair<std::string, int> right);
 int compare_word_length_v(std::pair<std::string, int> left, std::pair<std::string, int> right);
@@ -94,7 +96,9 @@ void handleArgument(std::string arg, std::list<std::string> &text)
     } 
     else 
     {
-        //todo: set up an exception here. atm not doing anything.
+        //this is where an exception should live. But our current pattern
+        //can't hold it without throwing an exception and
+        //this class is getting beefy as is.
         return;
     }
 }

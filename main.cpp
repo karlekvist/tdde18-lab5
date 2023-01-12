@@ -71,7 +71,7 @@ void handleArgument(std::string arg, std::list<std::string> &text)
                 break;
             
             case 1:
-                //table();
+                table();
                 break;
 
             case 2:
@@ -79,11 +79,11 @@ void handleArgument(std::string arg, std::list<std::string> &text)
                 break;
         
             case 3:
-                //substitute(parameter+parameter);
+                //substitute(parameter, parameter);
                 break;
 
             case 4:
-                //remove(parameter);
+                remove(parameter, text);
                 break; 
         }
     } 
@@ -96,7 +96,6 @@ void handleArgument(std::string arg, std::list<std::string> &text)
 
 void print(std::list<std::string> &text)
 {
-    std::cout << "it works?" << std::endl;
     std::copy(text.begin(), text.end(), 
         std::ostream_iterator<std::string>(std::cout, " "));
     std::cout << std::endl;
@@ -104,7 +103,22 @@ void print(std::list<std::string> &text)
 
 void table(std::list<std::string> &text)
 {
- get_word_map(text);
+    get_word_map(text);
+}
+
+void frequency(std::list<std::string> &text)
+{
+}
+
+void substitute(std::string word, std::list<std::string> &text)
+{
+}
+
+void remove(std::string const word, std::list<std::string> &text)
+{
+    auto it = std::remove(text.begin(), text.end(), word);
+    text.erase(it, text.end());
+    return;
 }
 
 /*
@@ -112,12 +126,5 @@ void table(std::list<std::string> &text)
 */
 void get_word_map(std::list<std::string> text)
 {
-    std::vector<std::string> word_v;
-    std::copy(text.begin(), text.end(), std::back_inserter(word_v));
-    std::sort(word_v.begin(), word_v.end());
-    auto it = std::unique(word_v.begin(), word_v.end());
-    std::vector<std::string> unqiue_words_v;
-    std::unique_copy(word_v.begin(), word_v.end(), std::back_inserter(unqiue_words_v));
-    std::copy(unqiue_words_v.begin(), unqiue_words_v.end(),
-        std::ostream_iterator<std::string>(std::cout, " "));
+    
 }

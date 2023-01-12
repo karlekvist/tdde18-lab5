@@ -79,7 +79,7 @@ void handleArgument(std::string arg, std::list<std::string> &text)
                 break;
 
             case 2:
-                //frequency();
+                frequency(text);
                 break;
         
             case 3:
@@ -121,7 +121,7 @@ void frequency(std::list<std::string> &text){
 
     int max_length = get_max_length(frequency_v);
 
-    std::for_each(frequency_v.begin(), frequency_v.end(),[&max_length](std::pair<std::string, int> p){
+    std::for_each(frequency_v.begin(), frequency_v.end(),[&frequency_v, &max_length](std::pair<std::string, int> p){
         std::cout << std::setw(max_length) << p.first << " " << p.second << std::endl;
 
     });
@@ -162,4 +162,5 @@ std::map<std::string, int> get_frequency_map(std::list<std::string> &text){
     std::map<std::string, int> frequency_map;
     std::for_each(text.begin(), text.end(), 
     [&frequency_map](std::string word){++frequency_map[word];});
+    return frequency_map;
 }

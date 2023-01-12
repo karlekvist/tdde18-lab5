@@ -10,9 +10,9 @@ void handleArgument(std::string arg, std::list<std::string> &text);
 void print(std::list<std::string> &text);
 void table(std::list<std::string> &text);
 void frequency(std::list<std::string> &text);
-void substitute(std::string word, std::list<std::string> &text);
+void substitute(std::string flag, std::list<std::string> &text);
 void remove(std::string word, std::list<std::string> &text);
-void get_wordmap(std::list<std::string> &text);
+std::vector<std::string> get_frequency_vector(std::list<std::string> &text);
 
 int main(int argc, char* argv[]){
 //step 1
@@ -71,7 +71,7 @@ void handleArgument(std::string arg, std::list<std::string> &text)
                 break;
             
             case 1:
-                table();
+                table(text);
                 break;
 
             case 2:
@@ -79,7 +79,7 @@ void handleArgument(std::string arg, std::list<std::string> &text)
                 break;
         
             case 3:
-                //substitute(parameter, parameter);
+                substitute(flag, text);
                 break;
 
             case 4:
@@ -110,8 +110,13 @@ void frequency(std::list<std::string> &text)
 {
 }
 
-void substitute(std::string word, std::list<std::string> &text)
+void substitute(std::string flag, std::list<std::string> &text)
 {
+    size_t index{0};
+    index = flag.find('+');
+    std::string old_word = flag.substr(0, index); 
+    std::string new_word = flag.erase(0, index + 1);
+    std::replace(text.begin(), text.end(), old_word, new_word);
 }
 
 void remove(std::string const word, std::list<std::string> &text)
@@ -124,7 +129,14 @@ void remove(std::string const word, std::list<std::string> &text)
 /*
 * 
 */
-void get_word_map(std::list<std::string> text)
-{
-    
+std::vector<std::string> get_frequency_vector(std::list<std::string> text)
+{   
+    std::vector<std::string> frequency_v{text.begin(), text.end()};
+    std::sort(frequency_v.begin(), frequency_v.end());
+
+    std::copy(frequency_v.begin(), frequency_v.end(), 
+        std::ostream_iterator<std::string>(std::cout, " "));
+    std::cout << std::endl;
+
+
 }

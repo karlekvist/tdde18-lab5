@@ -12,7 +12,11 @@ void table(std::list<std::string> &text);
 void frequency(std::list<std::string> &text);
 void substitute(std::string flag, std::list<std::string> &text);
 void remove(std::string word, std::list<std::string> &text);
-std::vector<std::string> get_frequency_vector(std::list<std::string> &text);
+std::map<std::string, int> get_frequency_map(std::list<std::string> &text);
+int reverse_compare_value(std::pair<std::string, int> left,  std::pair<std::string, int> right);
+int compare_word_length_v(std::pair<std::string, int> left, std::pair<std::string, int> right);
+int get_max_length(std::vector<std::pair<std::string, int>>);
+
 
 int main(int argc, char* argv[]){
 //step 1
@@ -62,9 +66,9 @@ void handleArgument(std::string arg, std::list<std::string> &text)
         flag = arg; 
     }
 
-
-    if(flags.count(flag) == 1) //check that argument is correct to be able to throw exception if not.
-    {
+    //we make sure that we don't pass faulty flags into the switch
+    //to avoid crashes.
+    if(flags.count(flag) == 1) {
         switch(flags.at(flag)){
             case 0:
                 print(text);
@@ -94,24 +98,30 @@ void handleArgument(std::string arg, std::list<std::string> &text)
     }
 }
 
-void print(std::list<std::string> &text)
-{
+void print(std::list<std::string> &text){
     std::copy(text.begin(), text.end(), 
         std::ostream_iterator<std::string>(std::cout, " "));
     std::cout << std::endl;
 }
 
-void table(std::list<std::string> &text)
-{
-    get_frequency_vector(text);
+void table(std::list<std::string> &text){
+    std::map<std::string, int> frequency_m = get_frequency_map(text);
 }
 
-void frequency(std::list<std::string> &text)
-{
+void frequency(std::list<std::string> &text){
+    std::map<std::string, int> frequency_m = get_frequency_map(text);
+    std::vector<std::pair<std::string,int>> frequency_v{frequency_m.begin(), frequency_m.end()};
+    std::sort(frequency_v.begin(), frequency_v.end(), reverse_compare_value);
+
+    int max_length = get_max_length(frequency_v);
+
+    std::for_each(frequency_v.begin(), frequency_v.end(),[&max_length](std::pair<std::string, int> p){
+        std::cout << std::setw(max_length) << p.first << " " << p.second << std::endl;
+
+    });
 }
 
-void substitute(std::string flag, std::list<std::string> &text)
-{
+void substitute(std::string flag, std::list<std::string> &text){
     size_t index{0};
     index = flag.find('+');
     std::string old_word = flag.substr(0, index); 
@@ -119,24 +129,27 @@ void substitute(std::string flag, std::list<std::string> &text)
     std::replace(text.begin(), text.end(), old_word, new_word);
 }
 
-void remove(std::string const word, std::list<std::string> &text)
-{
+void remove(std::string const word, std::list<std::string> &text){
     auto it = std::remove(text.begin(), text.end(), word);
     text.erase(it, text.end());
     return;
 }
 
-/*
-* 
-*/
-std::vector<std::string> get_frequency_vector(std::list<std::string> &text)
-{   
-    std::vector<std::string> frequency_v{text.begin(), text.end()};
-    std::sort(frequency_v.begin(), frequency_v.end());
+int reverse_compare_value(std::pair<std::string, int> left,  std::pair<std::string, int> right){
+    return right.second < left.second;
+}
 
-    std::copy(frequency_v.begin(), frequency_v.end(), 
-        std::ostream_iterator<std::string>(std::cout, " "));
-    std::cout << std::endl;
+int compare_word_length_v(std::pair<std::string, int> left, std::pair<std::string, int> right){
+    return left.first.length() <  right.first.length();
+}
 
-
+int get_max_length(std::vector<std::pair<std::string, int>> in_v){ 
+    std::vector<std::pair<std::string, int>>::iterator it = std::max_element(
+        in_v.begin(), in_v.end(), compare_word_length_v);
+    return it->first.length();
+}
+std::map<std::string, int> get_frequency_map(std::list<std::string> &text){   
+    std::map<std::string, int> frequency_map;
+    std::for_each(text.begin(), text.end(), 
+    [&frequency_map](std::string word){++frequency_map[word];});
 }

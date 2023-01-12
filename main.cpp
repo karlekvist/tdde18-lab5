@@ -6,12 +6,12 @@
 #include <vector>
 #include<algorithm>
 
-void handleArgument(std::string arg);
-void print();
-void table();
-void frequency();
-void substitute(std::string word);
-void remove(std::string word);
+void handleArgument(std::string arg, std::list<std::string> &text);
+void print(std::list<std::string> &text);
+void table(std::list<std::string> &text);
+void frequency(std::list<std::string> &text);
+void substitute(std::string word, std::list<std::string> &text);
+void remove(std::string word, std::list<std::string> &text);
 
 int main(int argc, char* argv[]){
 //step 1
@@ -33,11 +33,11 @@ int main(int argc, char* argv[]){
     }
 
 //step 4
-    std::for_each(arguments.cbegin(), arguments.cend(),[&](std::string argument){handleArgument(argument);});
+    std::for_each(arguments.cbegin(), arguments.cend(),[&](std::string argument){handleArgument(argument, text);});
 
 }
 
-void handleArgument(std::string arg)
+void handleArgument(std::string arg, std::list<std::string> &text)
 {
     //todo:handle exception if flag is invalid.
     //Setting up a map to be able to do a switch later.
@@ -66,7 +66,7 @@ void handleArgument(std::string arg)
     {
         switch(flags.at(flag)){
             case 0:
-                print();
+                print(text);
                 break;
             
             case 1:
@@ -78,7 +78,7 @@ void handleArgument(std::string arg)
                 break;
         
             case 3:
-                //substitute(parameter);
+                //substitute(parameter+parameter);
                 break;
 
             case 4:
@@ -93,7 +93,23 @@ void handleArgument(std::string arg)
     }
 }
 
-void print()
+void print(std::list<std::string> &text)
 {
     std::cout << "it works?" << std::endl;
+    std::copy(text.begin(), text.end(), 
+        std::ostream_iterator<std::string>(std::cout," "));
+    std::cout << std::endl;
+}
+
+void table(std::list<std::string> &text)
+{
+ 
+}
+
+/*
+* 
+*/
+std::map<std::string, int> get_word_map(std::list<std::string> text)
+{
+    std::map<std::string, int> word_map;
 }

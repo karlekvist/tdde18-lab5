@@ -103,7 +103,7 @@ void print(std::list<std::string> &text)
 
 void table(std::list<std::string> &text)
 {
-    get_word_map(text);
+    get_frequency_vector(text);
 }
 
 void frequency(std::list<std::string> &text)
@@ -129,7 +129,7 @@ void remove(std::string const word, std::list<std::string> &text)
 /*
 * 
 */
-std::vector<std::string> get_frequency_vector(std::list<std::string> text)
+std::vector<std::string> get_frequency_vector(std::list<std::string> &text)
 {   
     std::vector<std::string> frequency_v{text.begin(), text.end()};
     std::sort(frequency_v.begin(), frequency_v.end());

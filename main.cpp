@@ -80,8 +80,6 @@ void handleArgument(std::string &arg, std::list<std::string> &text)
         flag = arg; 
     }
 
-    //we make sure that we don't pass faulty flags into the switch
-    //to avoid crashes.
     try{
         switch(flags.at(flag)){
             case 0:

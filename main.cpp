@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <iterator>
 #include <list>
 #include <map>
 #include <vector>
@@ -8,7 +9,7 @@
 
 void handleArgument(std::string &arg, std::list<std::string> &text);
 
-void print(std::list<std::string> &text);
+void print(std::list<std::string>const &text);
 void table(std::list<std::string> &text);
 void frequency(std::list<std::string> &text);
 void substitute(std::string &parameter, std::list<std::string> &text);
@@ -34,15 +35,17 @@ int main(int argc, char* argv[]){
 //step 3
     std::list<std::string> text{std::istream_iterator<std::string>(file),
               std::istream_iterator<std::string>{}};
+
     if(text.size() < 1) {
         std::cout << "File empty" << std::endl;
         return -1;
     }
+    
 //step 4
     try{
-        std::for_each(arguments.cbegin(), arguments.cend(),[&](std::string argument){handleArgument(argument, text);});
-    } catch(std::string s) {
-        std::cout << s << std::endl;
+        std::for_each(arguments.cbegin(), arguments.cend(), [&](std::string argument){handleArgument(argument, text);});
+    } catch(char const* c) {
+        std::cout << c << std::endl;
         return -1;
     } 
     catch(...) {
@@ -102,8 +105,8 @@ void handleArgument(std::string &arg, std::list<std::string> &text)
                 break; 
         }
     } 
-    catch(std::string s){
-        throw s;
+    catch(char const* c){
+        throw c;
     }
     catch(...){
         throw;
@@ -116,7 +119,7 @@ void print(std::list<std::string> const &text) {
     std::cout << std::endl;
 }
 
-void table(std::list<std::string> const &text){
+void table(std::list<std::string> &text){
     std::map<std::string, int> frequency_m = get_frequency_map(text);
 
     int max_length = get_max_length(frequency_m);
@@ -126,7 +129,7 @@ void table(std::list<std::string> const &text){
     });
 }
 
-void frequency(std::list<std::string> const &text){
+void frequency(std::list<std::string> &text){
     std::map<std::string, int> frequency_m = get_frequency_map(text);
     std::vector<std::pair<std::string,int>> frequency_v{frequency_m.begin(), frequency_m.end()};
     std::sort(frequency_v.begin(), frequency_v.end(), reverse_compare_value);
@@ -156,7 +159,7 @@ void substitute(std::string &parameter, std::list<std::string> &text){
     std::replace(text.begin(), text.end(), old_word, new_word);
 }
 
-void remove(std::string const &parameter, std::list<std::string> &text){
+void remove(std::string &parameter, std::list<std::string> &text){
     auto it = std::remove(text.begin(), text.end(), parameter);
     if(parameter.size() < 1){
         throw "no <word>";
@@ -185,7 +188,7 @@ int get_max_length(std::vector<std::pair<std::string, int>> &in_v){
     return it->first.length();
 }
 
-std::map<std::string, int> get_frequency_map(std::list<std::string> const &text){   
+std::map<std::string, int> get_frequency_map(std::list<std::string> &text){   
     std::map<std::string, int> frequency_map;
     std::for_each(text.begin(), text.end(), 
     [&frequency_map](std::string word){++frequency_map[word];});

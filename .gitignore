@@ -31,3 +31,4 @@
 *.out
 *.app
 notes.txt
+.vscode/settings.json

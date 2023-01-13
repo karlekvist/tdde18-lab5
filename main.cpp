@@ -11,8 +11,8 @@ void handleArgument(std::string arg, std::list<std::string> &text);
 void print(std::list<std::string> &text);
 void table(std::list<std::string> &text);
 void frequency(std::list<std::string> &text);
-void substitute(std::string flag, std::list<std::string> &text);
-void remove(std::string word, std::list<std::string> &text);
+void substitute(std::string parameter, std::list<std::string> &text);
+void remove(std::string parameter, std::list<std::string> &text);
 
 std::map<std::string, int> get_frequency_map(std::list<std::string> &text);
 int reverse_compare_value(std::pair<std::string, int> left,  std::pair<std::string, int> right);
@@ -42,7 +42,6 @@ int main(int argc, char* argv[]){
 
 //step 4
     std::for_each(arguments.cbegin(), arguments.cend(),[&](std::string argument){handleArgument(argument, text);});
-
 }
 
 void handleArgument(std::string arg, std::list<std::string> &text)
@@ -98,7 +97,7 @@ void handleArgument(std::string arg, std::list<std::string> &text)
     {
         //this is where an exception should live. But our current pattern
         //can't hold it without throwing an exception and
-        //this class is getting beefy as is.
+        //this class is getting beefy as is, so now we just ignore faulty input.
         return;
     }
 }
@@ -131,16 +130,16 @@ void frequency(std::list<std::string> &text){
     });
 }
 
-void substitute(std::string flag, std::list<std::string> &text){
+void substitute(std::string parameter, std::list<std::string> &text){
     size_t index{0};
-    index = flag.find('+');
-    std::string old_word = flag.substr(0, index); 
-    std::string new_word = flag.erase(0, index + 1);
+    index = parameter.find('+');
+    std::string old_word = parameter.substr(0, index); 
+    std::string new_word = parameter.erase(0, index + 1);
     std::replace(text.begin(), text.end(), old_word, new_word);
 }
 
-void remove(std::string const word, std::list<std::string> &text){
-    auto it = std::remove(text.begin(), text.end(), word);
+void remove(std::string const parameter, std::list<std::string> &text){
+    auto it = std::remove(text.begin(), text.end(), parameter);
     text.erase(it, text.end());
     return;
 }

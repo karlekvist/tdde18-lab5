@@ -125,7 +125,7 @@ void frequency(std::list<std::string> &text){
 
     int max_length = get_max_length(frequency_v);
 
-    std::for_each(frequency_v.begin(), frequency_v.end(),[&frequency_v, &max_length](std::pair<std::string, int> p){
+    std::for_each(frequency_v.begin(), frequency_v.end(),[&max_length](std::pair<std::string, int> p){
         std::cout << std::setw(max_length) << p.first << " " << p.second << std::endl;
     });
 }
